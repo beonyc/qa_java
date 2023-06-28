@@ -18,11 +18,10 @@ import java.util.List;
 class CatTest {
 
 
-
-    @BeforeEach
-    public void init() {
-        MockitoAnnotations.initMocks(this);
-    }
+//    @BeforeEach
+//    public void init() {
+//        MockitoAnnotations.initMocks(this);
+//    }
 
     @Test
     public void getSoundTest()  {
@@ -35,6 +34,7 @@ class CatTest {
     public  void getFoodTest() throws Exception{
         Cat cat = new Cat(new Feline());
         assertTrue(cat.getFood().containsAll(List.of("Животные", "Птицы", "Рыба")));
+
     }
 
 
