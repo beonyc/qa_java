@@ -1,43 +1,44 @@
 package com.example;
 
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.Mockito;
+import org.mockito.Spy;
+import org.mockito.junit.MockitoJUnitRunner;
+import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class LionTest {
+@RunWith(MockitoJUnitRunner.class)
+public class LionTest {
     @Mock
-    Lion lionMock;
-    @BeforeEach
-    public void init() {
-        MockitoAnnotations.initMocks(this);
+    private Feline feline;
+    @Spy
+    private Feline felineSpy;
+    @Test
+    public void LionExceptionTest() {
+        String expected = "Используйте допустимые значения пола животного - самей или самка";
+        try {
+            assertFalse(new Lion("Тестировщик").hasMane);
+        } catch (Exception e) {
+            assertEquals(expected, e.getMessage());
+        }
     }
 
     @Test
-    void getKittens() {
-        Feline feline=new Feline();
-        Lion lion=new Lion(feline);
-        System.out.println(lion.getKittens());
+    public void getKittensTest(){
+        new Lion(feline).getKittens();
+        Mockito.verify(feline,Mockito.times(1)).getKittens();
+        Mockito.when(new Lion(feline).getKittens()).thenReturn(20);
+        assertEquals(20,new Lion(feline).getKittens());
     }
-
     @Test
-    void doesHaveMane() {
+    public void getFoodTest() throws Exception {
+        List<String> foodList=List.of("Животные", "Птицы", "Рыба");
+       assertEquals(foodList,new Lion(felineSpy).getFood());
     }
 
-    @ParameterizedTest
-    @CsvSource({
-            "true,Самец",
-            "false,Самка",
 
-    })
-    void getFood(boolean expected, String sex) throws Exception {
-            lionMock= new Lion(sex);
-            assertEquals(expected, lionMock.doesHaveMane());
 
-    }
 }

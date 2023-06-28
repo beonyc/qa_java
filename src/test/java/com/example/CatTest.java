@@ -1,41 +1,42 @@
 package com.example;
 
-import org.junit.jupiter.api.BeforeEach;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-import org.mockito.Spy;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
+import static org.junit.Assert.*;
 
-class CatTest {
+@RunWith(MockitoJUnitRunner.class)
+public class CatTest {
 
-
-//    @BeforeEach
-//    public void init() {
-//        MockitoAnnotations.initMocks(this);
-//    }
+    private Cat cat;
+    @Mock
+    private Feline felineMock;
 
     @Test
-    public void getSoundTest()  {
+    public void getSoundTest() {//Функциональный тест метода getSound()
         String expected = "Мяу";
-        Cat cat = new Cat(new Feline());
-        assertEquals(expected, cat.getSound());
-
+        cat = new Cat(new Feline());
+       assertEquals(expected, cat.getSound());
     }
+
     @Test
-    public  void getFoodTest() throws Exception{
-        Cat cat = new Cat(new Feline());
+    public void getFoodTest() throws Exception {//Функциональный тест метода getFood()
+        cat = new Cat(new Feline());
         assertTrue(cat.getFood().containsAll(List.of("Животные", "Птицы", "Рыба")));
-
     }
 
+    @Test
+    public void getFoodMockTest() throws Exception {//Мок тест метода getFood() с использованием стаба
+        List<String> expected = List.of("Бургер", "Кола");
+        cat = new Cat(felineMock);
+        Mockito.when(felineMock.eatMeat()).thenReturn(expected);
+        assertEquals(expected, cat.getFood());
+    }
 
 }
