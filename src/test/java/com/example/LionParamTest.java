@@ -1,9 +1,12 @@
 package com.example;
 
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 
 import static org.junit.Assert.*;
 
@@ -11,9 +14,8 @@ import static org.junit.Assert.*;
 public class LionParamTest {
     private final String sex;
     private final boolean expected;
-
-
-
+    @Spy
+    Feline feline;
     public LionParamTest(String sex, boolean expected) {
         this.sex = sex;
         this.expected = expected;
@@ -26,10 +28,13 @@ public class LionParamTest {
                 {"Самка", false}
         };
     }
-
+    @Before
+    public void init() {
+        MockitoAnnotations.initMocks(this);
+    }
     @Test
     public void LionTest() throws Exception {
-        assertEquals(expected, new Lion(sex).doesHaveMane());
+        assertEquals(expected, new Lion(feline,sex).doesHaveMane());
 
     }
 }

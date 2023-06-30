@@ -7,7 +7,7 @@ public class LionAlex extends Lion {
     private final int kittensCount;
 
     public LionAlex() throws Exception {
-        super("Самец");
+        super(new Feline(),"Самец");
         this.kittensCount = 0;
     }
 
@@ -18,7 +18,6 @@ public class LionAlex extends Lion {
     public String getPlaceOfLiving() {
         return "Нью-Йоркский зоопарк";
     }
-
     @Override
     public int getKittens() {
         return this.kittensCount;
